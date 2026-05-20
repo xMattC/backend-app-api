@@ -1,105 +1,176 @@
-# Testing Strategy and System Guarantees
+# Testing
 
-This project uses automated tests to verify both isolated logic and full API behaviour.  
+This project uses automated tests to verify business behaviour, authentication, ownership rules, relationship handling, validation, and API behaviour across the Workout API platform.
 
-The test suite ensures that the backend enforces strict access control, correct domain logic, and consistent API responses.
+The test suite is organised into two practical layers:
 
-## Test Layers
+- Unit tests
+- API / System tests
 
-### Unit Tests
-Unit tests validate isolated components such as:
-- model methods and helpers
-- serializer validation and transformation logic
-- derived calculations (e.g. estimated duration)
+---
+
+## Unit Tests
+
+Unit tests validate isolated application logic.
+
+Examples include:
+
+- Model methods and helper functions
+- Serializer validation logic
+- Data transformation behaviour
+- Derived calculations
+- Business rules
+- Validation behaviour
 
 These tests ensure internal logic behaves correctly in isolation.
 
-### API / System Tests
-API tests verify full request–response behaviour, including:
-- authentication
-- permissions and ownership
-- database interaction
-- response structure
+---
 
-These tests simulate real client usage via HTTP requests.
+## API / System Tests
 
-## System Guarantees
+API tests validate complete request–response behaviour.
 
-The following guarantees are enforced by application logic and verified by the automated test suite.
+This includes:
 
-### Authentication
+- Authentication workflows
+- Permissions and ownership enforcement
+- Database-backed API behaviour
+- API request and response validation
+- Nested relationship handling
+- File upload behaviour
 
-- Unauthenticated users cannot access protected endpoints (workouts, tags, exercises)
-- All private API endpoints require valid authentication
+These tests simulate realistic client interaction through HTTP requests.
+
+---
+
+# Architectural Guarantees
+
+The following guarantees are enforced through application logic and validated through automated tests.
+
+## Authentication
+
+- Private endpoints require authentication
+- Unauthenticated users cannot access protected resources
 - Authenticated users can access their own resources
+- Authentication state is enforced consistently across API endpoints
 
-### Ownership and Access Control
+---
+
+## User Isolation
 
 - Users can only access their own workouts
-- Users cannot retrieve another user’s workout (returns 404)
+- Users cannot retrieve another user’s workout
 - Users cannot update another user’s workout
 - Users cannot delete another user’s workout
 
 - Users can only access their own tags
 - Users cannot modify another user’s tags
 
-- Exercises and related entities are scoped to the authenticated user where applicable
-- Public resources (if present) are read-only and cannot be modified by users
+- Exercises and related entities remain scoped to the authenticated user where applicable
 
-### Workout and Relationship Behaviour
+---
+
+## Workout and Relationship Behaviour
 
 - Workouts can be created, updated, and deleted by their owner
-- Updating a workout does not allow reassignment of ownership
-- Nested relationships (tags, exercises) are handled correctly during create and update
+- Workout ownership cannot be reassigned through API requests
+- Nested relationships are handled correctly during create and update operations
 
-#### Tags
-- New tags are created when provided in payloads
-- Existing tags are reused (not duplicated)
+### Tags
+
+- New tags are created when required
+- Existing tags are reused where possible
 - Updating tags replaces previous assignments
-- Providing an empty list clears all tags from a workout
+- Empty lists remove all associated tags
 
-#### Exercises
-- New exercises are created when provided in payloads
+### Exercises
+
+- New exercises are created when required
 - Existing exercises are reused where possible
 - Updating exercises replaces previous assignments
-- Providing an empty list clears all exercises from a workout
+- Empty lists remove all associated exercises
 
-### Validation and Data Integrity
+---
 
-- Invalid payloads are rejected with appropriate error responses
-- Required fields must be provided when creating resources
+## Validation and Data Integrity
+
+- Invalid payloads are rejected
+- Required fields must be provided
 - Invalid relationship data is not persisted
-- Ownership constraints are enforced at all times
-- Attempts to modify restricted fields (e.g. workout owner) are ignored
+- Ownership rules remain enforced
+- Restricted fields cannot be modified through requests
 
-### API Response Behaviour
+---
 
-- List endpoints return only data belonging to the authenticated user
-- Detail endpoints return complete and accurate resource representations
-- Nested data (tags, exercises) is correctly serialized in responses
-- Responses match expected serializer output
+## API Guarantees
 
-### Media Upload Handling
+- List endpoints return only authenticated user data
+- Detail endpoints return complete resource representations
+- Nested relationships are correctly serialized
+- API responses remain consistent with serializer definitions
+- Validation failures return appropriate HTTP status codes
+
+---
+
+## Media Upload Handling
 
 - Valid image uploads are accepted and stored correctly
 - Uploaded images are associated with the correct workout
-- Invalid image payloads are rejected with a 400 response
-- File system state reflects successful uploads
+- Invalid uploads return appropriate error responses
+- File storage state reflects successful uploads
 
-## Continuous Verification
+---
 
-- All tests are automated and run via the standard Django test runner
-- The full test suite is executed in CI on each change
-- This ensures that all guarantees remain enforced as the code evolves
+# Continuous Verification
 
-## Summary
+The project uses continuous verification during development.
 
-The test suite verifies that the system:
+This includes:
 
-- enforces strict user-level data isolation
-- correctly manages relationships between workouts, tags, and exercises
-- rejects invalid or inconsistent data
-- provides reliable and predictable API responses
-- safely handles file uploads
+- Automated local test execution
+- Django test runner execution
+- CI pipeline execution
+- Validation of API behaviour and business rules
 
-These guarantees ensure the backend behaves as a consistent, secure, and production-ready API.
+---
+
+# Test File Reference
+
+## Unit Tests
+
+Admin:
+
+- [`test_admin.py`](../app/core/tests/test_admin.py)
+
+Core:
+
+- [`test_commands.py`](../app/core/tests/test_commands.py)
+- [`test_models.py`](../app/core/tests/test_models.py)
+
+
+## API / System Tests
+
+User API:
+
+- [`test_user_api.py`](../app/user/tests/test_user_api.py)
+
+Workout API:
+
+- [`test_exercise_api.py`](../app/workout/tests/test_exercise_api.py)
+- [`test_exercise_tags_api.py`](../app/workout/tests/test_exercise_tags_api.py)
+- [`test_workout_api.py`](../app/workout/tests/test_workout_api.py)
+- [`test_workout_tags_api.py`](../app/workout/tests/test_workout_tags_api.py)
+
+---
+
+# Summary
+
+The automated test suite provides confidence that the platform:
+
+- Enforces strict user-level isolation
+- Preserves ownership boundaries
+- Correctly manages workout relationships
+- Rejects invalid or inconsistent data
+- Maintains API consistency
+- Safely handles media uploads
+- Remains maintainable as the application evolves
