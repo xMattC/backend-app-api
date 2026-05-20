@@ -7,10 +7,10 @@ This document outlines common API workflows and example requests for the Workout
 ## Base URL
 
 Local:
-`http://localhost:8000/`
+(http://localhost:8000/)
 
 Production:
-`http://ec2-16-16-202-64.eu-north-1.compute.amazonaws.com/`
+(http://workoutapp.xmattc.com/api/docs/)
 
 ---
 
