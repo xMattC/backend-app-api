@@ -1,10 +1,23 @@
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![Django](https://img.shields.io/badge/Django-5.x-092E20?logo=django)
+![Django REST Framework](https://img.shields.io/badge/DRF-REST_API-red)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql)
+![Docker](https://img.shields.io/badge/Docker-Containerised-2496ED?logo=docker)
+![NGINX](https://img.shields.io/badge/NGINX-Reverse_Proxy-009639?logo=nginx&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-EC2_Deployment-FF9900?logo=amazonaws)
+![OpenAPI](https://img.shields.io/badge/OpenAPI-Swagger-85EA2D?logo=swagger)
+![Testing](https://img.shields.io/badge/Testing-Django_Test_Framework-0A9EDC)
+![flake8](https://img.shields.io/badge/flake8-Code_Quality-306998)
+![CI/CD](https://img.shields.io/badge/CI/CD-GitHub_Actions-2088FF?logo=githubactions&logoColor=white)
+
+
 # Workout API Service
 
-A production-style Django REST API for managing workouts, exercises, and user-scoped fitness data.
+A production-style Django REST API for managing workouts, exercises, tags, and user-scoped fitness data.
 
-The system supports relational workout structures, reusable exercises, tagging, and filtering, with a focus on clean API design and scalable backend architecture.
+The system models reusable exercises, configurable workout routines, authenticated user data, and relational workout composition through a clean REST API.
 
-The application is fully containerised with Docker and deployed on AWS EC2.
+The application is containerised with Docker, backed by PostgreSQL, documented with OpenAPI/Swagger, and deployed on AWS EC2.
 
 **Live API (Swagger Docs):** http://workoutapp.xmattc.com/api/docs/
 
@@ -49,21 +62,26 @@ The focus is on backend architecture, data modelling, and API design.
 
 ## 🧱 Engineering Practices
 
-- Automated testing covering API and model behaviour  
-- Dockerised development environment  
-- Environment configuration via environment variables  
-- Code quality checks using flake8  
-- Modular Django app structure  
-- Test-Driven Development (TDD) applied to core features  
-  - [Example commit history](https://github.com/xMattC/workout-api-service/commits/feature/workout_api)
+- Automated testing covering API and model behaviour
+- Dockerised development environment
+- Environment configuration via environment variables
+- Code quality checks using flake8
+- Modular Django app structure
+- Test-Driven Development (TDD) applied to core features
 
 ### Development Workflow
 
-- Feature branches for isolated development  
-- Pull requests for code review and integration  
-- GitHub Actions for continuous integration (tests + linting)  
-- Kanban-based task tracking  
-  - [Project board](https://github.com/users/xMattC/projects/2)
+- Test-Driven Development (TDD) workflows using feature branches
+    - [Example incremental TDD commit history](https://github.com/xMattC/workout-api-service/commits/feature/workout_api)
+- Pull request workflow for review and integration
+    - [Closed PRs](https://github.com/xMattC/workout-api-service/pulls?q=is%3Apr+is%3Aclosed)
+- Documented testing strategy and system guarantees
+    - [Testing document](docs/testing.md)
+- GitHub Actions CI/CD pipelines
+    - Automated testing and linting on pull requests
+    - [Action History](https://github.com/xMattC/workout-api-service/actions)
+- Kanban-based project management
+    - [Project board: Tasks](https://github.com/users/xMattC/projects/2/views/1)
 
 ---
 

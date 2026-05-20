@@ -188,8 +188,14 @@ A RESTful API for managing workouts, exercises, and user fitness data.
 
    - `POST /api/workouts/`
 
+---
+
+### Project Links
+
+- GitHub Repository: [Workout API Service](https://github.com/xMattC/workout-api-service)
 
 ---
+
 Built by xMattC
 """,
     'VERSION': '1.0.0',
