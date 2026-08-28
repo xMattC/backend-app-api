@@ -17,10 +17,6 @@ A production-style Django REST API for managing workouts, exercises, tags, and u
 
 The system models reusable exercises, configurable workout routines, authenticated user data, and relational workout composition through a clean REST API.
 
-The application is containerised with Docker, backed by PostgreSQL, documented with OpenAPI/Swagger, and deployed on AWS EC2.
-
-**Live API (Swagger Docs):** http://workoutapp.xmattc.com/api/docs/
-
 ---
 
 ## 🎯 Project Goal
